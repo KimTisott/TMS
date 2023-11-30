@@ -7,8 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="920">
     <Grid>
-        <!-- -Column definitions- -->
-
         <Grid.ColumnDefinitions>
 
             <ColumnDefinition Width="200"/>
@@ -22,11 +20,11 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <TextBlock Text="T M S"
-           VerticalAlignment="Center"
-           HorizontalAlignment="Left"
-           Foreground="Black"
-           FontSize="25" Margin="44,0,0,0"/>
+        <TextBlock Text="T  M  S" Grid.Column="1" Grid.Row="0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Foreground="Black"
+                   FontSize="25"/>
 
         <!-- Navigation Bar -->
         <StackPanel Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Center" Height="317">
@@ -52,12 +50,9 @@
                     Margin="5"/>
 
         </StackPanel>
-        <!---Border separating the main content area to that of buttons -->
-
-        <Border Grid.Column="2" Grid.RowSpan="2" BorderBrush="Blue" BorderThickness="2"/>
 
         <!-- Main Content Area -->
-        <ContentControl Grid.Column="1" Grid.Row="1" Content="{Binding CurrentViewModel}"/>
+        <Frame Grid.Column="1" Grid.Row="1" Name="MainContent"/>
 
     </Grid>
 </Window>
