@@ -1,23 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
-    <PackageReference Include="MySqlBackup.NET" Version="2.3.8" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
+		<PackageReference Include="MySqlBackup.NET" Version="2.3.8" />
+		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Using Include="Microsoft.EntityFrameworkCore" />
-    <Using Include="MySql.Data.MySqlClient" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Using Include="Microsoft.EntityFrameworkCore" />
+		<Using Include="MySql.Data.MySqlClient" />
+		<Using Include="System.Collections.Specialized" />
+		<Using Include="System.ComponentModel.DataAnnotations" />
+		<Using Include="System.ComponentModel.DataAnnotations.Schema" />
+		<Using Include="System.Configuration" />
+	</ItemGroup>
 
 </Project>

@@ -5,9 +5,9 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TMS.UI", "TMS.UI\TMS.UI.csproj", "{7B12F3AB-B792-4B01-B8CC-25F8861C62AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMS.Core", "TMS.Core\TMS.Core.csproj", "{17336CEC-DC36-4E97-8BF9-F2E5BD0F75C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TMS.Core", "TMS.Core\TMS.Core.csproj", "{17336CEC-DC36-4E97-8BF9-F2E5BD0F75C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMS.Tests", "TMS.Tests\TMS.Tests.csproj", "{F36DDE9D-EEE9-4404-854F-E5001DFFFA5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TMS.Tests", "TMS.Tests\TMS.Tests.csproj", "{F36DDE9D-EEE9-4404-854F-E5001DFFFA5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

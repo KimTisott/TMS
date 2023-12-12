@@ -1,19 +1,29 @@
 ﻿namespace TMS.Core;
 
-public class DataContext
-    : DbContext(new DbContextOptionsBuilder<DataContext>()
-        .UseMySql(ServerVersion.AutoDetect(""))
-        .Options)
+public class DataContext : DbContext
 {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+
+        optionsBuilder.UseMySql(DatabaseService.ConnectionString, ServerVersion.AutoDetect(DatabaseService.ConnectionString));
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>().HasData([
-            new User { Name = "admin", Password = "admin", Role = UserRole.Admin },
-            new User { Name = "buyer", Password = "buyer", Role = UserRole.Buyer },
-            new User { Name = "planner", Password = "planner", Role = UserRole.Planner },
-        ]);
+        modelBuilder.Entity<Setting>().HasData(new Setting[]
+        {
+            new() { Id = 1, Key = SettingKey.BackupDirectory, Value = "Backups"},
+            new() { Id = 2, Key = SettingKey.LogDirectory, Value = "Logs"}
+        });
+
+        modelBuilder.Entity<User>().HasData(new User[] {
+            new() { Id = 1, Name = "admin", Password = "admin", Role = UserRole.Admin },
+            new() { Id = 2, Name = "buyer", Password = "buyer", Role = UserRole.Buyer },
+            new() { Id = 3, Name = "planner", Password = "planner", Role = UserRole.Planner },
+        });
     }
 
     public DbSet<Address> Addresses => Set<Address>();

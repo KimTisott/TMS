@@ -1,20 +1,12 @@
 ﻿namespace TMS.Core;
 
-public class Log
+public class Log : Entity
 {
     public string Filename { get; set; }
-    public string Content { get; set; }
 
-    public bool Write()
-    {
-        try
-        {
-            File.WriteAllText(Filename, Content);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
+    [NotMapped]
+    public string Contents { get; set; }
+
+    public bool Write() =>
+        LoggingService.Write(Filename, Contents);
 }

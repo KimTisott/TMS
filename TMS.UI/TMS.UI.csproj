@@ -1,14 +1,38 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Media\favicon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Models\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MahApps.Metro" Version="3.0.0-alpha0476" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\TMS.Core\TMS.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Media\favicon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="MahApps.Metro.Controls" />
+		<Using Include="MahApps.Metro.Controls.Dialogs" />
+		<Using Include="System.Windows" />
+		<Using Include="TMS.Core" />
+	</ItemGroup>
 
 </Project>

@@ -2,30 +2,51 @@
 
 public class User : Entity
 {
+    public const int NameLength = 15;
+    public const int PasswordLength = 15;
+
+    [StringLength(NameLength)]
     public string Name { get; set; }
+
+    [StringLength(PasswordLength)]
     public string Password { get; set; }
+
     public UserRole Role { get; set; }
 
-    public static User Login(DataContext context, string name, string password)
-        => context.Users.First(user => user.Name == name && user.Password == password);
+    public bool Login() =>
+        AuthenticationService.Login(Name, Password);
 
-    public bool Backup(DataContext context)
+    public bool Backup() =>
+        Role == UserRole.Admin && BackupService.Run();
+
+    public string GetConfiguration(ConfigurationType configurationType)
     {
         if (Role == UserRole.Admin)
         {
-            using MySqlConnection connection = new(context.Database.GetConnectionString());
-            using MySqlCommand command = new();
-            using MySqlBackup backup = new(command);
-            command.Connection = connection;
-            connection.Open();
-            var directory = context.Settings.First(setting => setting.Key == SettingKey.BackupDirectory)?.Value ?? "./Backups";
-            var now = DateTime.Now;
-            backup.ExportToFile(Path.Combine(directory, now.ToString()));
-            connection.Close();
-            return true;
+            return ConfigurationService.Get(configurationType);
+        }
+
+        return null;
+    }
+
+    public bool SetConfiguration(ConfigurationType configurationType, string value)
+    {
+        if (Role == UserRole.Admin)
+        {
+            return ConfigurationService.Set(configurationType, value);
         }
 
         return false;
+    }
+
+    public string ReviewLog(Log log)
+    {
+        if (Role == UserRole.Admin)
+        {
+            return LoggingService.Read(log);
+        }
+
+        return null;
     }
 
     public Order ViewOrder(DataContext context, int orderId)

@@ -2,5 +2,6 @@
 
 public enum SettingKey
 {
-    BackupDirectory
+    BackupDirectory,
+    LogDirectory,
 }
