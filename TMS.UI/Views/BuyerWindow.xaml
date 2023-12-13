@@ -1,0 +1,50 @@
+﻿<mah:MetroWindow x:Class="TMS.UI.Views.BuyerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TMS.UI"
+        mc:Ignorable="d"
+        Height="600"
+        ResizeMode="CanResizeWithGrip"
+        ShowIconOnTitleBar="True"
+        Title="Buyer"
+        TitleCharacterCasing="Normal"
+        Width="900"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border BorderBrush="LightGreen" BorderThickness="3" CornerRadius="5" Padding="10" Margin="5">
+
+            <StackPanel Grid.Column="0" VerticalAlignment="Top">
+                <!-- Logo at the top -->
+                <Image Source="pack://application:,,,/TMS.UI;component/Media/favicon.png" Height="100" Margin="10"/>
+
+                <!-- Buttons centered with spacing -->
+                <StackPanel VerticalAlignment="Center">
+                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="Receive Contracts"  Margin="0,20"/>
+
+                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content =" Customers "  Margin="0,20"/>
+
+                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="New Orders " Margin="0,20"/>
+
+                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="Completed Orders" Margin="0,20"/>
+
+                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}"  Content=" Generate Invoice" Margin="0,20"/>
+                </StackPanel>
+            </StackPanel>
+
+        </Border>
+
+        <!-- Content Area -->
+        <Border Grid.Column="1" BorderBrush="LightGreen"  BorderThickness="3" CornerRadius="5" Padding="10" Margin="5">
+            
+                    <ContentControl Name="MainContent"/>
+        </Border>
+    </Grid>
+</mah:MetroWindow>
