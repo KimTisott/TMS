@@ -14,5 +14,32 @@
                  TitleCharacterCasing="Normal"
                  Width="600"
                  WindowStartupLocation="CenterScreen">
-    <local:BuyerControl/>
+   
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" VerticalAlignment="Top">
+            <!-- Logo at the top -->
+            <Image Source="pack://application:,,,/TMS.UI;component/Media/favicon.png" Height="100" Margin="10"/>
+
+            <!-- Buttons centered with spacing -->
+            <StackPanel VerticalAlignment="Center">
+                <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="Create User" Command="{Binding ShowCreateUserCommand}" Margin="0,20"/>
+                
+                <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="Backup" Command="{Binding ShowBackupCommand}" Margin="0,20"/>
+                
+                <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="Log File" Command="{Binding ShowLogFileCommand}" Margin="0,20"/>
+                
+                <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="Database" Command="{Binding ShowDatabaseCommand}" Margin="0,20"/>
+                
+                <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="General Config" Command="{Binding ShowGeneralConfigCommand}" Margin="0,20"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Content Area -->
+        <ContentControl Grid.Column="1" Name="MainContent"/>
+    </Grid>
 </mah:MetroWindow>
