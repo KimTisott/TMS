@@ -10,7 +10,7 @@
                  Icon="Media/favicon.png"
                  ResizeMode="CanResizeWithGrip"
                  ShowIconOnTitleBar="True"
-                 Title="Transportation Management System"
+                 Title="Admin"
                  TitleCharacterCasing="Normal"
                  Width="900"
                  WindowStartupLocation="CenterScreen">
@@ -29,15 +29,15 @@
 
                 <!-- Buttons centered with spacing -->
                 <StackPanel VerticalAlignment="Center">
-                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="Create User" Command="{Binding ShowCreateUserCommand}" Margin="0,20"/>
+                    <Button Style="{StaticResource MahApps.Styles.Button}" Content="Create User" Command="{Binding ShowCreateUserCommand}" Margin="0,20"/>
 
-                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="Backup" Command="{Binding ShowBackupCommand}" Margin="0,20"/>
+                    <Button Style="{StaticResource MahApps.Styles.Button}" Content="Backup" Command="{Binding ShowBackupCommand}" Margin="0,20"/>
 
-                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="Log File" Command="{Binding ShowLogFileCommand}" Margin="0,20"/>
+                    <Button Style="{StaticResource MahApps.Styles.Button}" Content="Log File" Command="{Binding ShowLogFileCommand}" Margin="0,20"/>
 
-                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="Database" Command="{Binding ShowDatabaseCommand}" Margin="0,20"/>
+                    <Button Style="{StaticResource MahApps.Styles.Button}" Content="Database" Command="{Binding ShowDatabaseCommand}" Margin="0,20"/>
 
-                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="General Config" Command="{Binding ShowGeneralConfigCommand}" Margin="0,20"/>
+                    <Button Style="{StaticResource MahApps.Styles.Button}" Content="General Config" Command="{Binding ShowGeneralConfigCommand}" Margin="0,20"/>
                 </StackPanel>
             </StackPanel>
             

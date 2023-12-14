@@ -27,15 +27,15 @@
 
                 <!-- Buttons centered with spacing -->
                 <StackPanel VerticalAlignment="Center">
-                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="Receive Contracts"  Margin="0,20"/>
+                    <Button Style="{StaticResource MahApps.Styles.Button}" Content="Receive Contracts"  Margin="0,20"/>
 
-                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content =" Customers "  Margin="0,20"/>
+                    <Button Style="{StaticResource MahApps.Styles.Button}" Content =" Customers "  Margin="0,20"/>
 
-                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="New Orders " Margin="0,20"/>
+                    <Button Style="{StaticResource MahApps.Styles.Button}" Content="New Orders " Margin="0,20"/>
 
-                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}" Content="Completed Orders" Margin="0,20"/>
+                    <Button Style="{StaticResource MahApps.Styles.Button}" Content="Completed Orders" Margin="0,20"/>
 
-                    <Button Style="{StaticResource MahApps.Metro.Styles.MetroButton}"  Content=" Generate Invoice" Margin="0,20"/>
+                    <Button Style="{StaticResource MahApps.Styles.Button}"  Content=" Generate Invoice" Margin="0,20"/>
                 </StackPanel>
             </StackPanel>
 

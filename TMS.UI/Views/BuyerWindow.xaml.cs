@@ -17,7 +17,7 @@ namespace TMS.UI.Views
     /// <summary>
     /// Interaction logic for BuyerWindow.xaml
     /// </summary>
-    public partial class BuyerWindow : Window
+    public partial class BuyerWindow : MetroWindow
     {
         public BuyerWindow()
         {

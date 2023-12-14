@@ -7,7 +7,7 @@
                  mc:Ignorable="d"
                  FontSize="15"
                  Height="200"
-                 Icon="Media/favicon.png"
+                 Icon="pack://application:,,,/TMS.UI;component/Media/favicon.png"
                  ResizeMode="NoResize"
                  ShowIconOnTitleBar="True"
                  ShowSystemMenu="False"
@@ -43,7 +43,7 @@
                      Height="30"
                      Margin="5"
                      Name="PasswordPasswordBox"/>
-        <Button Click="LoginButton_Click"
+        <Button Style="{StaticResource MahApps.Styles.Button}" Click="LoginButton_Click"
                 Content="Login"
                 FontSize="15"
                 Grid.ColumnSpan="2"

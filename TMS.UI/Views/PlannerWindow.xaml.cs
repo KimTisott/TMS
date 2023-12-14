@@ -17,7 +17,7 @@ namespace TMS.UI.Views
     /// <summary>
     /// Interaction logic for PlannerWindow.xaml
     /// </summary>
-    public partial class PlannerWindow : Window
+    public partial class PlannerWindow : MetroWindow
     {
         public PlannerWindow()
         {

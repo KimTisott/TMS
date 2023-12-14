@@ -2,6 +2,10 @@
 
 public partial class LoginWindow
 {
+    // Temporary credentials
+    private const string TempUsername = "admin";
+    private const string TempPassword = "password123";
+
     public LoginWindow()
     {
         InitializeComponent();
@@ -10,17 +14,23 @@ public partial class LoginWindow
         PasswordPasswordBox.MaxLength = User.PasswordLength;
     }
 
-    private async void LoginButton_Click(object sender, RoutedEventArgs e)
+    private void LoginButton_Click(object sender, RoutedEventArgs e)
     {
-        if (AuthenticationService.Login(UsernameTextBox.Text, PasswordPasswordBox.Password))
+        string enteredUsername = UsernameTextBox.Text;
+        string enteredPassword = PasswordPasswordBox.Password;
+
+        // Validate credentials
+        if (enteredUsername == TempUsername && enteredPassword == TempPassword)
         {
-            MainWindow main = new();
+            // Credentials are correct, open MainWindow
+            MainWindow main = new MainWindow();
             main.Show();
-            Close();
+            this.Close();
         }
         else
         {
-            await this.ShowMessageAsync("TMS", "Invalid Username and/or Password!");
+            // Show error message for invalid credentials
+            MessageBox.Show("Invalid Username and/or Password!", "TMS Login Error");
         }
     }
 }

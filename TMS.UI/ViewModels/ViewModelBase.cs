@@ -22,4 +22,5 @@ namespace TMS.UI.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+    
 }
