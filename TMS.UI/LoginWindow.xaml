@@ -7,7 +7,7 @@
                  mc:Ignorable="d"
                  FontSize="15"
                  Height="200"
-                 Icon="Media/favicon.png"
+                 Icon="pack://application:,,,/TMS.UI;component/Media/favicon.png"
                  ResizeMode="NoResize"
                  ShowIconOnTitleBar="True"
                  ShowSystemMenu="False"

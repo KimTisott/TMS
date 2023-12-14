@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TMS.UI.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindowView.xaml
+    /// Interaction logic for BuyerWindow.xaml
     /// </summary>
-    public partial class MainWindowView : Window
+    public partial class BuyerWindow : MetroWindow
     {
-        public MainWindowView()
+        public BuyerWindow()
         {
             InitializeComponent();
         }
