@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace TMS.UI;
+﻿namespace TMS.UI;
 
 public partial class BuyerControl : UserControl
 {

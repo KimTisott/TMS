@@ -6,11 +6,16 @@ public static class AuthenticationService
 
     public static bool Login(string username, string password)
     {
-        using DataContext context = new();
-        User = context.Users.FirstOrDefault(
+        using TMSContext tms = new();
+        User = tms.Users.FirstOrDefault(
             user => user.Name == username 
             && user.Password == password);
 
         return User != null;
+    }
+
+    public static void Logout()
+    {
+        User = null;
     }
 }

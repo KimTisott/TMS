@@ -2,9 +2,6 @@
 
 public enum ConfigurationType
 {
-    Database,
-    Password,
-    Port,
-    Server,
-    Uid
+    Application,
+    Database
 }

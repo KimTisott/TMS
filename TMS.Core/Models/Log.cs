@@ -1,7 +1,8 @@
 ﻿namespace TMS.Core;
 
-public class Log : Entity
+public class Log
 {
+    [Key]
     public string Filename { get; set; }
 
     [NotMapped]

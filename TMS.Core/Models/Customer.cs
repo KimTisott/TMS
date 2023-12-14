@@ -1,7 +1,8 @@
 ﻿namespace TMS.Core;
 
-public class Customer : Entity
+public class Customer
 {
-    public int MarketplaceId { get; set; }
+    public int Id { get; set; }
+    public string Name { get; set; }
     public Address Address { get; set; }
 }

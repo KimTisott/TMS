@@ -8,15 +8,15 @@ public static class BackupService
     {
         try
         {
-            using DataContext context = new();
-            using MySqlConnection connection = new(context.Database.GetConnectionString());
+            using TMSContext tms = new();
+            using MySqlConnection connection = new(tms.Database.GetConnectionString());
             using MySqlCommand command = new();
             using MySqlBackup backup = new(command);
             command.Connection = connection;
             connection.Open();
-            var directory = context.Settings.First(setting => setting.Key == SettingKey.BackupDirectory);
+            var directory = ConfigurationService.Get(ConfigurationKey.BackupDirectory);
             var filename = DateTime.Now.Clean();
-            var path = Path.Combine(directory.Value, filename, FileExtension).Remove(Path.GetInvalidPathChars());
+            var path = Path.Combine(directory, filename, FileExtension).Remove(Path.GetInvalidPathChars());
             backup.ExportToFile(path);
             connection.Close();
             return true;

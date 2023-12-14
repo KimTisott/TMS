@@ -10,9 +10,22 @@
                  Icon="Media/favicon.png"
                  ResizeMode="CanResizeWithGrip"
                  ShowIconOnTitleBar="True"
+                 ShowSystemMenu="False"
+                 WindowState="Maximized"
                  Title="Transportation Management System"
                  TitleCharacterCasing="Normal"
                  Width="600"
                  WindowStartupLocation="CenterScreen">
-    <local:BuyerControl/>
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button Click="LogoutButton_Click"
+                    Content="Logout"
+                    Name="LogoutButton"/>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+    <Grid Margin="5">
+        <local:AdminControl x:Name="AdminControl"/>
+        <local:BuyerControl x:Name="BuyerControl"/>
+        <local:PlannerControl x:Name="PlannerControl"/>
+    </Grid>
 </mah:MetroWindow>

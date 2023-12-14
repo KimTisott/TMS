@@ -31,8 +31,26 @@
 	<ItemGroup>
 		<Using Include="MahApps.Metro.Controls" />
 		<Using Include="MahApps.Metro.Controls.Dialogs" />
+		<Using Include="System.Collections.ObjectModel" />
 		<Using Include="System.Windows" />
+		<Using Include="System.Windows.Controls" />
+		<Using Include="System.Windows.Input" />
 		<Using Include="TMS.Core" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="AdminControl.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
+	  <Compile Update="PlannerControl.xaml.cs">
+	    <SubType>Code</SubType>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="App.config">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>

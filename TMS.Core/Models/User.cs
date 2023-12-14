@@ -1,11 +1,11 @@
 ﻿namespace TMS.Core;
 
-public class User : Entity
+public class User
 {
     public const int NameLength = 15;
     public const int PasswordLength = 15;
 
-    [StringLength(NameLength)]
+    [Key, StringLength(NameLength)]
     public string Name { get; set; }
 
     [StringLength(PasswordLength)]
@@ -16,10 +16,13 @@ public class User : Entity
     public bool Login() =>
         AuthenticationService.Login(Name, Password);
 
+    public void Logout() =>
+        AuthenticationService.Logout();
+
     public bool Backup() =>
         Role == UserRole.Admin && BackupService.Run();
 
-    public string GetConfiguration(ConfigurationType configurationType)
+    public string GetConfiguration(ConfigurationKey configurationType)
     {
         if (Role == UserRole.Admin)
         {
@@ -29,14 +32,14 @@ public class User : Entity
         return null;
     }
 
-    public bool SetConfiguration(ConfigurationType configurationType, string value)
+    public string SetConfiguration(ConfigurationKey configurationType, string value)
     {
         if (Role == UserRole.Admin)
         {
             return ConfigurationService.Set(configurationType, value);
         }
 
-        return false;
+        return null;
     }
 
     public string ReviewLog(Log log)
@@ -49,11 +52,11 @@ public class User : Entity
         return null;
     }
 
-    public Order ViewOrder(DataContext context, int orderId)
+    public Order ViewOrder(TMSContext tms, int orderId)
     {
         if (Role == UserRole.Planner)
         {
-            return context.Orders.Find(orderId);
+            return tms.Orders.Find(orderId);
         }
 
         return null;
