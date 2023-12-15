@@ -30,16 +30,23 @@ public class TMSContext : DbContext
             new() { Id = 2, Name = "United States" }
         });
 
-        modelBuilder.Entity<City>().HasData(new City[]
+        City ottawa = new() { Id = 1, CountryId = 1, Name = "Ottawa" };
+        City kingston = new() { Id = 2, CountryId = 1, Name = "Kingston" };
+        City belleville = new() { Id = 3, CountryId = 1, Name = "Belleville" };
+        City oshawa = new() { Id = 4, CountryId = 1, Name = "Oshawa" };
+        City toronto = new() { Id = 5, CountryId = 1, Name = "Toronto" };
+        City hamilton = new() { Id = 6, CountryId = 1, Name = "Hamilton" };
+        City london = new() { Id = 7, CountryId = 1, Name = "London" };
+        City windsor = new() { Id = 8, CountryId = 1, Name = "Windsor" };
+        
+        modelBuilder.Entity<City>().HasData(ottawa, kingston, belleville, oshawa, toronto, hamilton, london, windsor);
+
+        modelBuilder.Entity<Carrier>().HasData(new Carrier[]
         {
-            new() { Id = 1, CountryId = 1, Name = "Ottawa" },
-            new() { Id = 2, CountryId = 1, Name = "Kingston" },
-            new() { Id = 3, CountryId = 1, Name = "Belleville" },
-            new() { Id = 4, CountryId = 1, Name = "Oshawa" },
-            new() { Id = 5, CountryId = 1, Name = "Toronto" },
-            new() { Id = 6, CountryId = 1, Name = "Hamilton" },
-            new() { Id = 7, CountryId = 1, Name = "London" },
-            new() { Id = 8, CountryId = 1, Name = "Windsor" },
+            new() { Id = 1, Name = "Planet Express", FTLAvailability = 50, LTLAvailability = 640, FTLRate = 5.21, LTLRate = 0.3621, ReeferCharge = 0.08, Depots = [ windsor, hamilton, oshawa, belleville, ottawa ] },
+            new() { Id = 2, Name = "Schooner's", FTLAvailability = 18, LTLAvailability = 98, FTLRate = 5.05, LTLRate = 0.3434, ReeferCharge = 0.07, Depots = [ london, toronto, kingston ] },
+            new() { Id = 3, Name = "Tillman Transport", FTLAvailability = 24, LTLAvailability = 35, FTLRate = 5.11, LTLRate = 0.3012, ReeferCharge = 0.09, Depots = [ windsor, london, hamilton ] },
+            new() { Id = 4, Name = "We Haul", FTLAvailability = 11, LTLAvailability = 0, FTLRate = 5.2, LTLRate = 0, ReeferCharge = 0.065, Depots = [ ottawa, toronto ] },
         });
 
         modelBuilder.Entity<Rate>().HasData(new Rate[]

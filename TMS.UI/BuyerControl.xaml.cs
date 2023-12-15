@@ -64,6 +64,9 @@ public partial class BuyerControl
         var customer = tms.Customers.First(customer => customer.Name == contract.ClientName);
         tms.Orders.Add(new()
         {
+            JobType = contract.JobType,
+            VanType = contract.VanType,
+            Quantity = contract.Quantity,
             CustomerId = customer.Id,
             Customer = customer
         });
@@ -86,9 +89,6 @@ public partial class BuyerControl
         if (source is DataGridCell)
         {
             var order = (Order)OrderDataGrid.SelectedItem;
-            OrderPriceTextBlock.Text = order.Price?.ToString();
-            OrderIsCompletedTextBlock.Text = order.IsCompleted.ToString();
-            OrderCustomerNameTextBlock.Text = order.Customer.Name.ToString();
             OrderCitiesMultiSelectionComboBox.SelectedItems?.Clear();
             foreach (var city in order.Cities)
             {

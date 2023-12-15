@@ -69,7 +69,7 @@ public class User
             return new()
             {
                 CreatedAt = DateTime.Now,
-                Contents = $"Price: {order.Price:C}",
+                Contents = $"Cost: {order.Cost:C}",
                 OrderId = order.Id
             };
         }

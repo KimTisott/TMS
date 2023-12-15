@@ -4,11 +4,10 @@ public class Carrier
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public int DepotId { get; set; }
-    public City Depot { get; set; }
     public int FTLAvailability { get; set; }
     public int LTLAvailability { get; set; }
-    public decimal FTLRate { get; set; }
-    public decimal LTLRate { get; set; }
-    public int ReeferCharge { get; set; }
+    public double FTLRate { get; set; }
+    public double LTLRate { get; set; }
+    public double ReeferCharge { get; set; }
+    public ICollection<City> Depots { get; set; } = new List<City>();
 }

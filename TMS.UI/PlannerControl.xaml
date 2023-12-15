@@ -37,14 +37,18 @@
                       MouseUp="OrderDataGrid_MouseUp"
                       Name="OrderDataGrid">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Price, StringFormat=C}"
-                                        Header="Price"/>
                     <DataGridTextColumn Binding="{Binding IsCompleted}"
                                         Header="Completed"/>
                     <DataGridTextColumn Binding="{Binding Customer.Name}"
                                         Header="Customer"/>
                     <DataGridTextColumn Binding="{Binding CityNames}"
                                         Header="Cities"/>
+                    <DataGridTextColumn Binding="{Binding Distance}"
+                                        Header="Distance (km)"/>
+                    <DataGridTextColumn Binding="{Binding Cost, StringFormat=C}"
+                                        Header="Cost"/>
+                    <DataGridTextColumn Binding="{Binding Time}"
+                                        Header="Time (h)"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

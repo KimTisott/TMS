@@ -121,12 +121,12 @@
                                         Header="FTL Availability"/>
                     <DataGridTextColumn Binding="{Binding LTLAvailability}"
                                         Header="LTL Availability"/>
-                    <DataGridTextColumn Binding="{Binding FTLRate, StringFormat=C}"
+                    <DataGridTextColumn Binding="{Binding FTLRate, StringFormat=C4}"
                                         Header="FTL Rate"/>
-                    <DataGridTextColumn Binding="{Binding LTLRate, StringFormat=C}"
+                    <DataGridTextColumn Binding="{Binding LTLRate, StringFormat=C4}"
                                         Header="LTL Rate"/>
-                    <DataGridTextColumn Binding="{Binding ReeferCharge, StringFormat=P2}"
-                                        Header="Reefer Charge"/>
+                    <DataGridTextColumn Binding="{Binding ReeferCharge}"
+                                        Header="Reefer Charge (%)"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
@@ -138,6 +138,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -158,11 +159,10 @@
                        Margin="5 0"
                        Text="Depot City:"
                        VerticalAlignment="Center"/>
-            <ComboBox DisplayMemberPath="Name"
-                      Grid.Column="1"
-                      Grid.Row="1"
-                      Margin="0 5"
-                      Name="CarrierDepotComboBox"/>
+            <mah:MultiSelectionComboBox Grid.Column="1"
+                                        Grid.Row="1"
+                                        Margin="0 5"
+                                        Name="CarrierDepotsMultiSelectionComboBox"/>
             <TextBlock Grid.Row="2"
                        HorizontalAlignment="Right"
                        Margin="5 0"
@@ -190,40 +190,38 @@
                        Margin="5 0"
                        Text="FTL Rate ($):"
                        VerticalAlignment="Center"/>
-            <mah:NumericUpDown DecimalPointCorrection="Currency"
-                               Grid.Column="1"
+            <mah:NumericUpDown Grid.Column="1"
                                Grid.Row="4"
                                HideUpDownButtons="True"
                                Margin="0 5"
                                Minimum="0"
-                               Name="CarrierFTLRateNumericUpDown"/>
-            <TextBlock Grid.Row="4"
+                               Name="CarrierFTLRateNumericUpDown"
+                               StringFormat="C4"/>
+            <TextBlock Grid.Row="5"
                        HorizontalAlignment="Right"
                        Margin="5 0"
                        Text="LTL Rate ($):"
                        VerticalAlignment="Center"/>
-            <mah:NumericUpDown DecimalPointCorrection="Currency"
-                               Grid.Column="1"
-                               Grid.Row="4"
+            <mah:NumericUpDown Grid.Column="1"
+                               Grid.Row="5"
                                HideUpDownButtons="True"
                                Margin="0 5"
                                Minimum="0"
                                Name="CarrierLTLRateNumericUpDown"
-                               StringFormat="C"/>
-            <TextBlock Grid.Row="5"
+                               StringFormat="C4"/>
+            <TextBlock Grid.Row="6"
                        HorizontalAlignment="Right"
                        Margin="5 0"
                        Text="Reefer Charge (%):"
                        VerticalAlignment="Center"/>
-            <mah:NumericUpDown DecimalPointCorrection="Percent"
-                               Grid.Column="1"
-                               Grid.Row="5"
+            <mah:NumericUpDown Grid.Column="1"
+                               Grid.Row="6"
                                HideUpDownButtons="True"
                                Margin="0 5"
                                Minimum="0"
                                Name="CarrierReeferChargeNumericUpDown"/>
             <Grid Grid.ColumnSpan="2"
-                  Grid.Row="6">
+                  Grid.Row="7">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />

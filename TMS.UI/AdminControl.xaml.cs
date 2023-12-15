@@ -1,6 +1,4 @@
-﻿using TMS.Core;
-
-namespace TMS.UI;
+﻿namespace TMS.UI;
 
 public partial class AdminControl
 {
@@ -11,8 +9,8 @@ public partial class AdminControl
         ConfigurationDataGrid.ItemsSource = ConfigurationService.Configurations;
         LogDataGrid.ItemsSource = LoggingService.ReadAll();
         using TMSContext tms = new();
-        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depot).ToArray();
-        CarrierDepotComboBox.ItemsSource = tms.Cities.ToArray();
+        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depots).ToArray();
+        CarrierDepotsMultiSelectionComboBox.ItemsSource = tms.Cities.Select(city => city.Name).ToArray();
         RouteDataGrid.ItemsSource = tms.Routes.Include(route => route.From).Include(route => route.To).ToArray();
         RouteFromComboBox.ItemsSource = RouteToComboBox.ItemsSource = tms.Cities.ToArray();
         RateDataGrid.ItemsSource = tms.Rates.ToArray();
@@ -66,7 +64,11 @@ public partial class AdminControl
             if (carrier != null)
             {
                 CarrierNameTextBox.Text = carrier.Name;
-                CarrierDepotComboBox.SelectedItem = carrier.Depot;
+                CarrierDepotsMultiSelectionComboBox.SelectedItems?.Clear();
+                foreach (var depot in carrier.Depots)
+                {
+                    CarrierDepotsMultiSelectionComboBox.SelectedItems?.Add(depot.Name);
+                }
                 CarrierFTLAvailabilityNumericUpDown.Value = carrier.FTLAvailability;
                 CarrierLTLAvailabilityNumericUpDown.Value = carrier.LTLAvailability;
                 CarrierFTLRateNumericUpDown.Value = (double)carrier.FTLRate;
@@ -84,36 +86,69 @@ public partial class AdminControl
     private void CarrierCreateButton_Click(object sender, RoutedEventArgs e)
     {
         using TMSContext tms = new();
-        tms.Carriers.Add(new()
+        Carrier carrier = new()
         {
             Name = CarrierNameTextBox.Text,
-            DepotId = ((City)CarrierDepotComboBox.SelectedItem).Id,
             FTLAvailability = (int)CarrierFTLAvailabilityNumericUpDown.Value.GetValueOrDefault(),
             LTLAvailability = (int)CarrierLTLAvailabilityNumericUpDown.Value.GetValueOrDefault(),
             FTLRate = (int)CarrierFTLRateNumericUpDown.Value.GetValueOrDefault(),
             LTLRate = (int)CarrierLTLRateNumericUpDown.Value.GetValueOrDefault(),
             ReeferCharge = (int)CarrierReeferChargeNumericUpDown.Value.GetValueOrDefault()
-        });
+        };
+        var cityNames = CarrierDepotsMultiSelectionComboBox.SelectedItems;
+        if (cityNames != null)
+        {
+            var cities = tms.Cities.Where(city => cityNames.Contains(city.Name));
+            carrier.Depots = new List<City>();
+            foreach (var city in cities)
+            {
+                if (carrier.Depots.Contains(city))
+                {
+                    tms.Entry(city).State = EntityState.Modified;
+                }
+                else
+                {
+                    carrier.Depots.Add(city);
+                }
+            }
+        }
+        tms.Carriers.Add(carrier);
         tms.SaveChanges();
 
-        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depot).ToArray();
+        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depots).ToArray();
         CarrierSaveButton.IsEnabled = CarrierDeleteButton.IsEnabled = false;
     }
 
     private void CarrierSaveButton_Click(object sender, RoutedEventArgs e)
     {
         using TMSContext tms = new();
-        var carrier = tms.Carriers.First(carrier => carrier.Id == ((Carrier)CarrierDataGrid.SelectedItem).Id);
+        var carrier = tms.Carriers.Include(carrier => carrier.Depots).First(carrier => carrier.Id == ((Carrier)CarrierDataGrid.SelectedItem).Id);
         carrier.Name = CarrierNameTextBox.Text;
-        carrier.DepotId = ((City)CarrierDepotComboBox.SelectedItem).Id;
         carrier.FTLAvailability = (int)CarrierFTLAvailabilityNumericUpDown.Value.GetValueOrDefault();
         carrier.LTLAvailability = (int)CarrierLTLAvailabilityNumericUpDown.Value.GetValueOrDefault();
         carrier.FTLRate = (int)CarrierFTLRateNumericUpDown.Value.GetValueOrDefault();
         carrier.LTLRate = (int)CarrierLTLRateNumericUpDown.Value.GetValueOrDefault();
         carrier.ReeferCharge = (int)CarrierReeferChargeNumericUpDown.Value.GetValueOrDefault();
+        var cityNames = CarrierDepotsMultiSelectionComboBox.SelectedItems;
+        if (cityNames != null)
+        {
+            var cities = tms.Cities.Where(city => cityNames.Contains(city.Name));
+            carrier.Depots = new List<City>();
+            foreach (var city in cities)
+            {
+                if (carrier.Depots.Contains(city))
+                {
+                    tms.Entry(city).State = EntityState.Modified;
+                }
+                else
+                {
+                    carrier.Depots.Add(city);
+                }
+            }
+        }
         tms.SaveChanges();
 
-        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depot).ToArray();
+        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depots).ToArray();
         CarrierSaveButton.IsEnabled = CarrierDeleteButton.IsEnabled = false;
     }
 
@@ -123,7 +158,7 @@ public partial class AdminControl
         tms.Carriers.Remove((Carrier)CarrierDataGrid.SelectedItem);
         tms.SaveChanges();
 
-        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depot).ToArray();
+        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depots).ToArray();
         CarrierSaveButton.IsEnabled = CarrierDeleteButton.IsEnabled = false;
     }
 
