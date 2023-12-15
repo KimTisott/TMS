@@ -17,7 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MahApps.Metro" Version="2.4.10" />
+		<PackageReference Include="MahApps.Metro" Version="3.0.0-alpha0476" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -31,10 +31,13 @@
 	<ItemGroup>
 		<Using Include="MahApps.Metro.Controls" />
 		<Using Include="MahApps.Metro.Controls.Dialogs" />
+		<Using Include="Microsoft.EntityFrameworkCore" />
 		<Using Include="System.Collections.ObjectModel" />
 		<Using Include="System.Windows" />
 		<Using Include="System.Windows.Controls" />
+		<Using Include="System.Windows.Controls.Primitives" />
 		<Using Include="System.Windows.Input" />
+		<Using Include="System.Windows.Media" />
 		<Using Include="TMS.Core" />
 	</ItemGroup>
 

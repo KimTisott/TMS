@@ -6,18 +6,24 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:local="clr-namespace:TMS.UI"
                  mc:Ignorable="d"
-                 Height="600"
                  Icon="Media/favicon.png"
-                 ResizeMode="CanResizeWithGrip"
+                 ResizeMode="NoResize"
                  ShowIconOnTitleBar="True"
                  ShowSystemMenu="False"
-                 WindowState="Maximized"
-                 Title="Transportation Management System"
+                 Title="Transportation Management System - "
                  TitleCharacterCasing="Normal"
-                 Width="900"
-                 WindowStartupLocation="CenterScreen">
+                 WindowStartupLocation="CenterScreen"
+                 WindowState="Maximized">
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
+            <TextBlock Name="WindowTextBlock"
+                       VerticalAlignment="Center"/>
+            <Button Click="BackupButton_Click"
+                    Content="Backup"
+                    Name="BackupButton"/>
+            <Button Click="SimulateTimePassageButton_Click"
+                    Content="Simulate Time Passage"
+                    Name="SimulateTimePassageButton"/>
             <Button Click="LogoutButton_Click"
                     Content="Logout"
                     Name="LogoutButton"/>

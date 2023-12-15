@@ -5,31 +5,29 @@
                                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                                  mc:Ignorable="d" 
-                                 d:DesignHeight="450"
-                                 d:DesignWidth="800">
+                                 d:DesignHeight="1080"
+                                 d:DesignWidth="1920">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
+        <StackPanel Margin="5">
             <TextBlock FontSize="20"
                        Text="Configurations"/>
             <DataGrid AutoGenerateColumns="False"
                       Grid.Row="1"
+                      HorizontalScrollBarVisibility="Hidden"
+                      IsReadOnly="True"
                       Margin="5"
+                      MouseUp="ConfigurationDataGrid_MouseUp"
                       Name="ConfigurationDataGrid">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Type}"
@@ -40,53 +38,348 @@
                                         Header="Value"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Grid Grid.Column="1"
-                  Grid.Row="1"
-                  Margin="5"
-                  Name="ConfigurationGrid">
+        </StackPanel>
+        <Grid Grid.Row="1"
+              Margin="5"
+              VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="Value:"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1"
+                     Margin="0 5"
+                     Name="ConfigurationValueTextBox" />
+            <Button Click="ConfigurationSaveButton_Click"
+                    Content="Save"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="1"
+                    Margin="0 5"
+                    Name="ConfigurationSaveButton"/>
+        </Grid>
+        <Grid Grid.Column="1"
+              Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock HorizontalAlignment="Right"
-                           Margin="5 0"
-                           Text="Type:"
-                           VerticalAlignment="Center"/>
-                <TextBlock Grid.Column="1"
-                           Margin="0 5"
-                           Text="{Binding ElementName=ConfigurationDataGrid, Path=SelectedItem.Type}" />
-                <TextBlock Grid.Row="1"
-                           HorizontalAlignment="Right"
-                           Margin="5 0"
-                           Text="Key:"
-                           VerticalAlignment="Center"/>
-                <TextBlock Grid.Column="1"
-                           Grid.Row="1"
-                           Margin="0 5"
-                           Text="{Binding ElementName=ConfigurationDataGrid, Path=SelectedItem.Key}" />
-                <TextBlock Grid.Row="2"
-                           HorizontalAlignment="Right"
-                           Margin="5 0"
-                           Text="Value:"
-                           VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1"
-                         Grid.Row="2"
-                         Margin="0 5"
-                         Text="{Binding ElementName=ConfigurationDataGrid, Path=SelectedItem.Value}" />
-                <Button Click="SaveButton_Click"
-                        Content="Save"
-                        FontSize="15"
+                <TextBlock FontSize="20"
+                           Text="Logs"/>
+                <Button Click="LogRefreshButton_Click"
+                        Content="Refresh"
                         Grid.Column="1"
-                        Grid.Row="3"
-                        Margin="0 5"
-                        Name="SaveButton"/>
+                        Name="LogRefreshButton"
+                        Padding="0"/>
             </Grid>
+            <DataGrid AutoGenerateColumns="False"
+                      Grid.Row="1"
+                      IsReadOnly="True"
+                      Margin="5"
+                      Name="LogDataGrid">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Filename}"
+                                        Header="Filename"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <TextBox Grid.Column="1"
+                 Grid.Row="1"
+                 Height="Auto"
+                 IsReadOnly="True"
+                 Margin="10"
+                 Text="{Binding ElementName=LogDataGrid, Path=SelectedItem.Contents}"
+                 TextWrapping="Wrap"/>
+        <StackPanel Grid.Column="2"
+                    Margin="5">
+            <TextBlock FontSize="20"
+                       Text="Carriers"/>
+            <DataGrid AutoGenerateColumns="False"
+                      Grid.Row="1"
+                      HorizontalScrollBarVisibility="Hidden"
+                      IsReadOnly="True"
+                      Margin="5"
+                      MouseUp="CarrierDataGrid_MouseUp"
+                      Name="CarrierDataGrid">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name}"
+                                        Header="Name"/>
+                    <DataGridTextColumn Binding="{Binding Depot.Name}"
+                                        Header="Depot City"/>
+                    <DataGridTextColumn Binding="{Binding FTLAvailability}"
+                                        Header="FTL Availability"/>
+                    <DataGridTextColumn Binding="{Binding LTLAvailability}"
+                                        Header="LTL Availability"/>
+                    <DataGridTextColumn Binding="{Binding FTLRate, StringFormat=C}"
+                                        Header="FTL Rate"/>
+                    <DataGridTextColumn Binding="{Binding LTLRate, StringFormat=C}"
+                                        Header="LTL Rate"/>
+                    <DataGridTextColumn Binding="{Binding ReeferCharge, StringFormat=P2}"
+                                        Header="Reefer Charge"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        <Grid Grid.Column="2"
+              Grid.Row="1"
+              Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="Name:"
+                       VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1"
+                     Margin="0 5"
+                     Name="CarrierNameTextBox" />
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="Depot City:"
+                       VerticalAlignment="Center"/>
+            <ComboBox DisplayMemberPath="Name"
+                      Grid.Column="1"
+                      Grid.Row="1"
+                      Margin="0 5"
+                      Name="CarrierDepotComboBox"/>
+            <TextBlock Grid.Row="2"
+                       HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="FTL Availability:"
+                       VerticalAlignment="Center"/>
+            <mah:NumericUpDown Grid.Column="1"
+                               Grid.Row="2"
+                               HideUpDownButtons="True"
+                               Margin="0 5"
+                               Minimum="0"
+                               Name="CarrierFTLAvailabilityNumericUpDown"/>
+            <TextBlock Grid.Row="3"
+                       HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="LTL Availability:"
+                       VerticalAlignment="Center"/>
+            <mah:NumericUpDown Grid.Column="1"
+                               Grid.Row="3"
+                               HideUpDownButtons="True"
+                               Margin="0 5"
+                               Minimum="0"
+                               Name="CarrierLTLAvailabilityNumericUpDown"/>
+            <TextBlock Grid.Row="4"
+                       HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="FTL Rate ($):"
+                       VerticalAlignment="Center"/>
+            <mah:NumericUpDown DecimalPointCorrection="Currency"
+                               Grid.Column="1"
+                               Grid.Row="4"
+                               HideUpDownButtons="True"
+                               Margin="0 5"
+                               Minimum="0"
+                               Name="CarrierFTLRateNumericUpDown"/>
+            <TextBlock Grid.Row="4"
+                       HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="LTL Rate ($):"
+                       VerticalAlignment="Center"/>
+            <mah:NumericUpDown DecimalPointCorrection="Currency"
+                               Grid.Column="1"
+                               Grid.Row="4"
+                               HideUpDownButtons="True"
+                               Margin="0 5"
+                               Minimum="0"
+                               Name="CarrierLTLRateNumericUpDown"
+                               StringFormat="C"/>
+            <TextBlock Grid.Row="5"
+                       HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="Reefer Charge (%):"
+                       VerticalAlignment="Center"/>
+            <mah:NumericUpDown DecimalPointCorrection="Percent"
+                               Grid.Column="1"
+                               Grid.Row="5"
+                               HideUpDownButtons="True"
+                               Margin="0 5"
+                               Minimum="0"
+                               Name="CarrierReeferChargeNumericUpDown"/>
+            <Grid Grid.ColumnSpan="2"
+                  Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Click="CarrierCreateButton_Click"
+                        Content="Create"
+                        Margin="0 5"
+                        Name="CarrierCreateButton"/>
+                <Button Click="CarrierSaveButton_Click"
+                        Content="Save"
+                        Grid.Column="1"
+                        IsEnabled="False"
+                        Margin="5"
+                        Name="CarrierSaveButton"/>
+                <Button Click="CarrierDeleteButton_Click"
+                        Content="Delete"
+                        Grid.Column="2"
+                        IsEnabled="False"
+                        Margin="0 5"
+                        Name="CarrierDeleteButton"/>
+            </Grid>
+        </Grid>
+        <StackPanel Grid.Column="3"
+                    Margin="5">
+            <TextBlock FontSize="20"
+                       Text="Routes"/>
+            <DataGrid AutoGenerateColumns="False"
+                      Grid.Row="1"
+                      HorizontalScrollBarVisibility="Hidden"
+                      IsReadOnly="True"
+                      Margin="5"
+                      MouseUp="RouteDataGrid_MouseUp"
+                      Name="RouteDataGrid">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding From.Name}"
+                                        Header="From"/>
+                    <DataGridTextColumn Binding="{Binding To.Name}"
+                                        Header="To"/>
+                    <DataGridTextColumn Binding="{Binding Distance}"
+                                        Header="Distance (km)"/>
+                    <DataGridTextColumn Binding="{Binding Time}"
+                                        Header="Duration (h)"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        <Grid Grid.Column="3"
+              Grid.Row="1"
+              Margin="5"
+              Name="RouteGrid"
+              VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="From:"
+                       VerticalAlignment="Center"/>
+            <ComboBox DisplayMemberPath="Name"
+                      Grid.Column="1"
+                      Margin="0 5"
+                      Name="RouteFromComboBox"/>
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="To:"
+                       VerticalAlignment="Center"/>
+            <ComboBox DisplayMemberPath="Name"
+                      Grid.Column="1"
+                      Grid.Row="1"
+                      Margin="0 5"
+                      Name="RouteToComboBox"/>
+            <TextBlock Grid.Row="2"
+                       HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="Distance (km):"
+                       VerticalAlignment="Center"/>
+            <mah:NumericUpDown Grid.Column="1"
+                               Grid.Row="2"
+                               HideUpDownButtons="True"
+                               Margin="0 5"
+                               Minimum="0"
+                               Name="RouteDistanceNumericUpDown"/>
+            <TextBlock Grid.Row="3"
+                       HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="Time (h):"
+                       VerticalAlignment="Center"/>
+            <mah:NumericUpDown Grid.Column="1"
+                               Grid.Row="3"
+                               HideUpDownButtons="True"
+                               Margin="0 5"
+                               Minimum="0"
+                               Name="RouteTimeNumericUpDown"/>
+            <Button Click="RouteSaveButton_Click"
+                    Content="Save"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="4"
+                    IsEnabled="False"
+                    Margin="5"
+                    Name="RouteSaveButton"/>
+        </Grid>
+        <StackPanel Grid.Column="4"
+                    Margin="5">
+            <TextBlock FontSize="20"
+                       Text="Rates"/>
+            <DataGrid AutoGenerateColumns="False"
+                      Grid.Row="1"
+                      HorizontalScrollBarVisibility="Hidden"
+                      IsReadOnly="True"
+                      Margin="5"
+                      MouseUp="RateDataGrid_MouseUp"
+                      Name="RateDataGrid">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Type}"
+                                        Header="Type"/>
+                    <DataGridTextColumn Binding="{Binding Cost, StringFormat=C4}"
+                                        Header="Cost"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        <Grid Grid.Column="4"
+              Grid.Row="1"
+              Margin="5"
+              VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Right"
+                       Margin="5 0"
+                       Text="Cost:"
+                       VerticalAlignment="Center"/>
+            <mah:NumericUpDown Grid.Column="1"
+                               HideUpDownButtons="True"
+                               Margin="0 5"
+                               Minimum="0"
+                               Name="RateCostNumericUpDown"/>
+            <Button Click="RateSaveButton_Click"
+                    Content="Save"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="1"
+                    Margin="0 5"
+                    Name="RateSaveButton"/>
         </Grid>
     </Grid>
 </mah:TransitioningContentControl>

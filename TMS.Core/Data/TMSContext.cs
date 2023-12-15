@@ -24,6 +24,41 @@ public class TMSContext : DbContext
             new(ConfigurationKey.MarketplaceUsername, "DevOSHT", ConfigurationType.Database)
         });
 
+        modelBuilder.Entity<Country>().HasData(new Country[]
+        {
+            new() { Id = 1, Name = "Canada" },
+            new() { Id = 2, Name = "United States" }
+        });
+
+        modelBuilder.Entity<City>().HasData(new City[]
+        {
+            new() { Id = 1, CountryId = 1, Name = "Ottawa" },
+            new() { Id = 2, CountryId = 1, Name = "Kingston" },
+            new() { Id = 3, CountryId = 1, Name = "Belleville" },
+            new() { Id = 4, CountryId = 1, Name = "Oshawa" },
+            new() { Id = 5, CountryId = 1, Name = "Toronto" },
+            new() { Id = 6, CountryId = 1, Name = "Hamilton" },
+            new() { Id = 7, CountryId = 1, Name = "London" },
+            new() { Id = 8, CountryId = 1, Name = "Windsor" },
+        });
+
+        modelBuilder.Entity<Rate>().HasData(new Rate[]
+        {
+            new() { Type = RateType.FTLAvgRate, Cost = 4.985m },
+            new() { Type = RateType.LTLAvgRate, Cost = 0.2995m }
+        });
+
+        modelBuilder.Entity<Route>().HasData(new Route[]
+        {
+            new() { Id = 1, FromId = 1, ToId = 2, Distance = 196, Time = 2.5 },
+            new() { Id = 2, FromId = 2, ToId = 3, Distance = 82, Time = 1.2 },
+            new() { Id = 3, FromId = 3, ToId = 4, Distance = 134, Time = 1.65 },
+            new() { Id = 4, FromId = 4, ToId = 5, Distance = 60, Time = 1.3 },
+            new() { Id = 5, FromId = 5, ToId = 6, Distance = 68, Time = 1.25 },
+            new() { Id = 6, FromId = 6, ToId = 7, Distance = 128, Time = 1.75 },
+            new() { Id = 7, FromId = 7, ToId = 8, Distance = 191, Time = 2.5 }
+        });
+
         modelBuilder.Entity<User>().HasData(new User[] {
             new() { Name = "admin", Password = "admin", Role = UserRole.Admin },
             new() { Name = "buyer", Password = "buyer", Role = UserRole.Buyer },
@@ -40,6 +75,7 @@ public class TMSContext : DbContext
     public DbSet<Invoice> Invoices => Set<Invoice>();
     public DbSet<Log> Logs => Set<Log>();
     public DbSet<Order> Orders => Set<Order>();
+    public DbSet<Rate> Rates => Set<Rate>();
     public DbSet<Route> Routes => Set<Route>();
     public DbSet<Trip> Trips => Set<Trip>();
     public DbSet<User> Users => Set<User>();

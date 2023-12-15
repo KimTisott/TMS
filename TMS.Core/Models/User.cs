@@ -62,16 +62,15 @@ public class User
         return null;
     }
 
-    public Invoice GenerateInvoice(Order[] orders, Customer customer)
+    public Invoice GenerateInvoice(Order order)
     {
         if (Role == UserRole.Buyer)
         {
             return new()
             {
-                Price = orders.Sum(order => order.Price),
-                Filename = $"Invoice_{Guid.NewGuid}",
-                Customer = customer,
-                Orders = orders
+                CreatedAt = DateTime.Now,
+                Contents = $"Price: {order.Price:C}",
+                OrderId = order.Id
             };
         }
 

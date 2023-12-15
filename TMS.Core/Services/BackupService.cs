@@ -15,10 +15,12 @@ public static class BackupService
             command.Connection = connection;
             connection.Open();
             var directory = ConfigurationService.Get(ConfigurationKey.BackupDirectory);
-            var filename = DateTime.Now.Clean();
-            var path = Path.Combine(directory, filename, FileExtension).Remove(Path.GetInvalidPathChars());
+            var now = DateTime.Now;
+            var filename = now.Clean();
+            var path = Path.Combine(directory, filename + FileExtension).Remove(Path.GetInvalidPathChars());
             backup.ExportToFile(path);
             connection.Close();
+            LoggingService.Write(filename, $"Backup finished at {now}.");
             return true;
         }
         catch (Exception exception)

@@ -1,13 +1,10 @@
 ﻿namespace TMS.Core;
 
-public class MarketplaceContext : DbContext
+public static class MarketplaceContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public static IEnumerable<Contract> GetContracts()
     {
-        base.OnConfiguring(optionsBuilder);
-
-        optionsBuilder.UseMySql(ConfigurationService.MarketplaceConnectionString, ServerVersion.AutoDetect(ConfigurationService.MarketplaceConnectionString));
+        using MySqlConnection connection = new(ConfigurationService.MarketplaceConnectionString);
+        return connection.Query<Contract>("SELECT Client_Name ClientName,Job_Type JobType,Quantity,Origin,Destination,Van_Type VanType FROM Contract");
     }
-
-    public DbSet<Contract> Contracts => Set<Contract>();
 }

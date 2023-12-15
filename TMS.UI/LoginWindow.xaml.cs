@@ -2,10 +2,6 @@
 
 public partial class LoginWindow
 {
-    // Temporary credentials
-    private const string TempUsername = "admin";
-    private const string TempPassword = "password123";
-
     public LoginWindow()
     {
         InitializeComponent();
@@ -17,7 +13,7 @@ public partial class LoginWindow
 
         UsernameTextBox.Focus();
 #if DEBUG
-        AuthenticationService.Login("admin", "admin");
+        AuthenticationService.Login("planner", "planner");
         MainWindow main = new();
         main.Show();
         Close();
@@ -34,16 +30,11 @@ public partial class LoginWindow
 
     private void LoginButton_Click(object sender, RoutedEventArgs e)
     {
-        string enteredUsername = UsernameTextBox.Text;
-        string enteredPassword = PasswordPasswordBox.Password;
-
-        // Validate credentials
-        if (enteredUsername == TempUsername && enteredPassword == TempPassword)
+        if (AuthenticationService.Login(UsernameTextBox.Text, PasswordPasswordBox.Password))
         {
-            // Credentials are correct, open MainWindow
-            MainWindow main = new MainWindow();
+            MainWindow main = new();
             main.Show();
-            this.Close();
+            Close();
         }
         else
         {

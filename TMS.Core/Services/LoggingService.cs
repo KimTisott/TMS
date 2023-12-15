@@ -35,4 +35,17 @@ public static class LoggingService
 
         return File.ReadAllText(Path.Combine(directory, log.Filename + FileExtension));
     }
+
+    public static HashSet<Log> ReadAll()
+    {
+        using TMSContext tms = new();
+        var logs = tms.Logs.ToHashSet();
+
+        foreach (var log in logs)
+        {
+            log.Contents = File.ReadAllText(log.Filename);
+        }
+
+        return logs;
+    }
 }
