@@ -38,7 +38,9 @@ public partial class AdminControl
     private void ConfigurationSaveButton_Click(object sender, RoutedEventArgs e)
     {
         var configuration = (Configuration)ConfigurationDataGrid.SelectedItem;
-        configuration.Save();
+        ConfigurationService.Set(configuration.Key, ConfigurationValueTextBox.Text);
+        ConfigurationDataGrid.ItemsSource = null;
+        ConfigurationDataGrid.ItemsSource = ConfigurationService.Configurations;
     }
 
     private void LogRefreshButton_Click(object sender, RoutedEventArgs e)

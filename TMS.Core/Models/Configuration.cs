@@ -35,12 +35,12 @@ public class Configuration
         }
     }
 
-    public void Save()
+    public void Save(string value)
     {
         if (Type == ConfigurationType.Application)
         {
             var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            configuration.AppSettings.Settings[Key.ToString()].Value = Value;
+            configuration.AppSettings.Settings[Key.ToString()].Value = value;
             configuration.Save(ConfigurationSaveMode.Full, true);
             ConfigurationManager.RefreshSection("appSettings");
         }
@@ -48,8 +48,9 @@ public class Configuration
         {
             using TMSContext tms = new();
             var configuration = tms.Configurations.Find(Key);
-            configuration.Value = Value;
+            configuration.Value = value;
             tms.SaveChanges();
         }
+        Value = value;
     }
 }

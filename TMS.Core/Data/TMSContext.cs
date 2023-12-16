@@ -6,7 +6,14 @@ public class TMSContext : DbContext
     {
         base.OnConfiguring(optionsBuilder);
 
-        optionsBuilder.UseMySql(ConfigurationService.ConnectionString, ServerVersion.AutoDetect(ConfigurationService.ConnectionString));
+        try
+        {
+            optionsBuilder.UseMySql(ConfigurationService.ConnectionString, ServerVersion.AutoDetect(ConfigurationService.ConnectionString));
+        }
+        catch (Exception ex)
+        {
+            LoggingService.Write(DateTime.Now.Clean(), ex.ToString());
+        }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

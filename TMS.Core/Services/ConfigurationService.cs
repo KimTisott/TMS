@@ -12,8 +12,7 @@ public static class ConfigurationService
     public static string Set(ConfigurationKey key, string value)
     {
         var configuration = Configurations.First(config => config.Key == key);
-        configuration.Value = value;
-        configuration.Save();
+        configuration.Save(value);
         return configuration.Reload();
     }
 
