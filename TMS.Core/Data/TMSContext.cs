@@ -30,23 +30,43 @@ public class TMSContext : DbContext
             new() { Id = 2, Name = "United States" }
         });
 
-        City ottawa = new() { Id = 1, CountryId = 1, Name = "Ottawa" };
-        City kingston = new() { Id = 2, CountryId = 1, Name = "Kingston" };
-        City belleville = new() { Id = 3, CountryId = 1, Name = "Belleville" };
-        City oshawa = new() { Id = 4, CountryId = 1, Name = "Oshawa" };
-        City toronto = new() { Id = 5, CountryId = 1, Name = "Toronto" };
-        City hamilton = new() { Id = 6, CountryId = 1, Name = "Hamilton" };
-        City london = new() { Id = 7, CountryId = 1, Name = "London" };
-        City windsor = new() { Id = 8, CountryId = 1, Name = "Windsor" };
-        
-        modelBuilder.Entity<City>().HasData(ottawa, kingston, belleville, oshawa, toronto, hamilton, london, windsor);
+        modelBuilder.Entity<City>().HasData(new City[]
+        {
+            new() { Id = 1, CountryId = 1, Name = "Ottawa" },
+            new() { Id = 2, CountryId = 1, Name = "Kingston" },
+            new() { Id = 3, CountryId = 1, Name = "Belleville" },
+            new() { Id = 4, CountryId = 1, Name = "Oshawa" },
+            new() { Id = 5, CountryId = 1, Name = "Toronto" },
+            new() { Id = 6, CountryId = 1, Name = "Hamilton" },
+            new() { Id = 7, CountryId = 1, Name = "London" },
+            new() { Id = 8, CountryId = 1, Name = "Windsor" }
+        });
 
         modelBuilder.Entity<Carrier>().HasData(new Carrier[]
         {
-            new() { Id = 1, Name = "Planet Express", FTLAvailability = 50, LTLAvailability = 640, FTLRate = 5.21, LTLRate = 0.3621, ReeferCharge = 0.08, Depots = [ windsor, hamilton, oshawa, belleville, ottawa ] },
-            new() { Id = 2, Name = "Schooner's", FTLAvailability = 18, LTLAvailability = 98, FTLRate = 5.05, LTLRate = 0.3434, ReeferCharge = 0.07, Depots = [ london, toronto, kingston ] },
-            new() { Id = 3, Name = "Tillman Transport", FTLAvailability = 24, LTLAvailability = 35, FTLRate = 5.11, LTLRate = 0.3012, ReeferCharge = 0.09, Depots = [ windsor, london, hamilton ] },
-            new() { Id = 4, Name = "We Haul", FTLAvailability = 11, LTLAvailability = 0, FTLRate = 5.2, LTLRate = 0, ReeferCharge = 0.065, Depots = [ ottawa, toronto ] },
+            new() { Id = 1, Name = "Planet Express", FTLAvailability = 50, LTLAvailability = 640, FTLRate = 5.21, LTLRate = 0.3621, ReeferCharge = 0.08 },
+            new() { Id = 2, Name = "Schooner's", FTLAvailability = 18, LTLAvailability = 98, FTLRate = 5.05, LTLRate = 0.3434, ReeferCharge = 0.07 },
+            new() { Id = 3, Name = "Tillman Transport", FTLAvailability = 24, LTLAvailability = 35, FTLRate = 5.11, LTLRate = 0.3012, ReeferCharge = 0.09 },
+            new() { Id = 4, Name = "We Haul", FTLAvailability = 11, LTLAvailability = 0, FTLRate = 5.2, LTLRate = 0, ReeferCharge = 0.065 }
+        });
+
+        modelBuilder.Entity<CarrierCity>().HasKey(nameof(CarrierCity.CarrierId), nameof(CarrierCity.CityId));
+
+        modelBuilder.Entity<CarrierCity>().HasData(new CarrierCity[]
+        {
+            new() { CarrierId = 1, CityId = 1 },
+            new() { CarrierId = 1, CityId = 3 },
+            new() { CarrierId = 1, CityId = 4 },
+            new() { CarrierId = 1, CityId = 6 },
+            new() { CarrierId = 1, CityId = 8 },
+            new() { CarrierId = 2, CityId = 2 },
+            new() { CarrierId = 2, CityId = 5 },
+            new() { CarrierId = 2, CityId = 7 },
+            new() { CarrierId = 3, CityId = 6 },
+            new() { CarrierId = 3, CityId = 7 },
+            new() { CarrierId = 3, CityId = 8 },
+            new() { CarrierId = 4, CityId = 1 },
+            new() { CarrierId = 4, CityId = 5 }
         });
 
         modelBuilder.Entity<Rate>().HasData(new Rate[]
@@ -69,12 +89,13 @@ public class TMSContext : DbContext
         modelBuilder.Entity<User>().HasData(new User[] {
             new() { Name = "admin", Password = "admin", Role = UserRole.Admin },
             new() { Name = "buyer", Password = "buyer", Role = UserRole.Buyer },
-            new() { Name = "planner", Password = "planner", Role = UserRole.Planner },
+            new() { Name = "planner", Password = "planner", Role = UserRole.Planner }
         });
     }
 
     public DbSet<Address> Addresses => Set<Address>();
     public DbSet<Carrier> Carriers => Set<Carrier>();
+    public DbSet<CarrierCity> CarrierCities => Set<CarrierCity>();
     public DbSet<City> Cities => Set<City>();
     public DbSet<Configuration> Configurations => Set<Configuration>();
     public DbSet<Country> Countries => Set<Country>();

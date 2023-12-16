@@ -115,18 +115,18 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Name}"
                                         Header="Name"/>
-                    <DataGridTextColumn Binding="{Binding Depot.Name}"
-                                        Header="Depot City"/>
+                    <DataGridTextColumn Binding="{Binding DepotNames}"
+                                        Header="Depots"/>
                     <DataGridTextColumn Binding="{Binding FTLAvailability}"
-                                        Header="FTL Availability"/>
+                                        Header="FTLA"/>
                     <DataGridTextColumn Binding="{Binding LTLAvailability}"
-                                        Header="LTL Availability"/>
-                    <DataGridTextColumn Binding="{Binding FTLRate, StringFormat=C4}"
+                                        Header="LTLA"/>
+                    <DataGridTextColumn Binding="{Binding FTLRate, StringFormat=C2}"
                                         Header="FTL Rate"/>
                     <DataGridTextColumn Binding="{Binding LTLRate, StringFormat=C4}"
                                         Header="LTL Rate"/>
                     <DataGridTextColumn Binding="{Binding ReeferCharge}"
-                                        Header="Reefer Charge (%)"/>
+                                        Header="Reefer Charge"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
@@ -157,7 +157,7 @@
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Right"
                        Margin="5 0"
-                       Text="Depot City:"
+                       Text="Depots:"
                        VerticalAlignment="Center"/>
             <mah:MultiSelectionComboBox Grid.Column="1"
                                         Grid.Row="1"
@@ -196,7 +196,7 @@
                                Margin="0 5"
                                Minimum="0"
                                Name="CarrierFTLRateNumericUpDown"
-                               StringFormat="C4"/>
+                               StringFormat="C2"/>
             <TextBlock Grid.Row="5"
                        HorizontalAlignment="Right"
                        Margin="5 0"
@@ -212,7 +212,7 @@
             <TextBlock Grid.Row="6"
                        HorizontalAlignment="Right"
                        Margin="5 0"
-                       Text="Reefer Charge (%):"
+                       Text="Reefer Charge:"
                        VerticalAlignment="Center"/>
             <mah:NumericUpDown Grid.Column="1"
                                Grid.Row="6"

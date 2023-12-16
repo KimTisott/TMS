@@ -9,5 +9,7 @@ public class Carrier
     public double FTLRate { get; set; }
     public double LTLRate { get; set; }
     public double ReeferCharge { get; set; }
-    public ICollection<City> Depots { get; set; } = new List<City>();
+    public ICollection<CarrierCity> Depots { get; } = new List<CarrierCity>();
+
+    public string DepotNames => string.Join(", ", Depots?.Select(depot => depot.City?.Name));
 }

@@ -9,7 +9,7 @@ public partial class AdminControl
         ConfigurationDataGrid.ItemsSource = ConfigurationService.Configurations;
         LogDataGrid.ItemsSource = LoggingService.ReadAll();
         using TMSContext tms = new();
-        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depots).ToArray();
+        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depots).ThenInclude(depot => depot.City).ToArray();
         CarrierDepotsMultiSelectionComboBox.ItemsSource = tms.Cities.Select(city => city.Name).ToArray();
         RouteDataGrid.ItemsSource = tms.Routes.Include(route => route.From).Include(route => route.To).ToArray();
         RouteFromComboBox.ItemsSource = RouteToComboBox.ItemsSource = tms.Cities.ToArray();
@@ -67,7 +67,7 @@ public partial class AdminControl
                 CarrierDepotsMultiSelectionComboBox.SelectedItems?.Clear();
                 foreach (var depot in carrier.Depots)
                 {
-                    CarrierDepotsMultiSelectionComboBox.SelectedItems?.Add(depot.Name);
+                    CarrierDepotsMultiSelectionComboBox.SelectedItems?.Add(depot.City.Name);
                 }
                 CarrierFTLAvailabilityNumericUpDown.Value = carrier.FTLAvailability;
                 CarrierLTLAvailabilityNumericUpDown.Value = carrier.LTLAvailability;
@@ -95,27 +95,25 @@ public partial class AdminControl
             LTLRate = (int)CarrierLTLRateNumericUpDown.Value.GetValueOrDefault(),
             ReeferCharge = (int)CarrierReeferChargeNumericUpDown.Value.GetValueOrDefault()
         };
+        tms.Carriers.Add(carrier);
+        tms.SaveChanges();
         var cityNames = CarrierDepotsMultiSelectionComboBox.SelectedItems;
         if (cityNames != null)
         {
+            tms.CarrierCities.RemoveRange(tms.CarrierCities.Where(carrierCity => carrierCity.CarrierId == carrier.Id));
             var cities = tms.Cities.Where(city => cityNames.Contains(city.Name));
-            carrier.Depots = new List<City>();
             foreach (var city in cities)
             {
-                if (carrier.Depots.Contains(city))
+                tms.CarrierCities.Add(new()
                 {
-                    tms.Entry(city).State = EntityState.Modified;
-                }
-                else
-                {
-                    carrier.Depots.Add(city);
-                }
+                    CarrierId = carrier.Id,
+                    CityId = city.Id
+                });
             }
+            tms.SaveChanges();
         }
-        tms.Carriers.Add(carrier);
-        tms.SaveChanges();
 
-        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depots).ToArray();
+        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depots).ThenInclude(depot => depot.City).ToArray();
         CarrierSaveButton.IsEnabled = CarrierDeleteButton.IsEnabled = false;
     }
 
@@ -129,26 +127,24 @@ public partial class AdminControl
         carrier.FTLRate = (int)CarrierFTLRateNumericUpDown.Value.GetValueOrDefault();
         carrier.LTLRate = (int)CarrierLTLRateNumericUpDown.Value.GetValueOrDefault();
         carrier.ReeferCharge = (int)CarrierReeferChargeNumericUpDown.Value.GetValueOrDefault();
+        tms.SaveChanges();
         var cityNames = CarrierDepotsMultiSelectionComboBox.SelectedItems;
         if (cityNames != null)
         {
+            tms.CarrierCities.RemoveRange(tms.CarrierCities.Where(carrierCity => carrierCity.CarrierId == carrier.Id));
             var cities = tms.Cities.Where(city => cityNames.Contains(city.Name));
-            carrier.Depots = new List<City>();
             foreach (var city in cities)
             {
-                if (carrier.Depots.Contains(city))
+                tms.CarrierCities.Add(new()
                 {
-                    tms.Entry(city).State = EntityState.Modified;
-                }
-                else
-                {
-                    carrier.Depots.Add(city);
-                }
+                    CarrierId = carrier.Id,
+                    CityId = city.Id
+                });
             }
+            tms.SaveChanges();
         }
-        tms.SaveChanges();
 
-        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depots).ToArray();
+        CarrierDataGrid.ItemsSource = tms.Carriers.Include(carrier => carrier.Depots).ThenInclude(depot => depot.City).ToArray();
         CarrierSaveButton.IsEnabled = CarrierDeleteButton.IsEnabled = false;
     }
 

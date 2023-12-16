@@ -12,12 +12,6 @@ public partial class LoginWindow
         PasswordPasswordBox.MaxLength = User.PasswordLength;
 
         UsernameTextBox.Focus();
-#if DEBUG
-        AuthenticationService.Login("planner", "planner");
-        MainWindow main = new();
-        main.Show();
-        Close();
-#endif
     }
 
     private void LoginWindow_KeyUp(object sender, KeyEventArgs e)

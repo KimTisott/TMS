@@ -107,7 +107,7 @@ public partial class BuyerControl
         if (cityNames != null)
         {
             var cities = tms.Cities.Where(city => cityNames.Contains(city.Name));
-            order.Cities = new List<City>();
+            order.Cities.Clear();
             foreach (var city in cities)
             {
                 if (order.Cities.Contains(city))
@@ -133,9 +133,11 @@ public partial class BuyerControl
         tms.Invoices.Add(new()
         {
             CreatedAt = DateTime.Now,
-            Contents = $"",
+            Contents = $"Customer: {order.Customer.Name}\nVan Type: {order.VanType}\nJob Type: {order.JobType}\nQuantity: {order.Quantity}",
             OrderId = order.Id
         });
         tms.SaveChanges();
+        OrderSaveButton.IsEnabled = false;
+        OrderCreateInvoiceButton.IsEnabled = false;
     }
 }

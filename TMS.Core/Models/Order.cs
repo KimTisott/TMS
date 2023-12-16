@@ -16,9 +16,11 @@ public class Order
 
     public Customer Customer { get; set; }
 
-    public ICollection<City> Cities { get; set; } = new List<City>();
+    public ICollection<City> Cities { get; } = new List<City>();
     
     public ICollection<Carrier> Carriers { get; } = new List<Carrier>();
+
+    public ICollection<Route> Routes { get; } = new List<Route>();
     
     public ICollection<Trip> Trips { get; } = new List<Trip>();
 
@@ -26,20 +28,20 @@ public class Order
 
     public int Distance => Trips.Sum(trip => trip.Distance);
 
-    public decimal Cost
+    public double Cost
     {
         get
         {
-            decimal cost = 0;
+            double cost = 0;
             if (JobType == JobType.FullTruckLoad)
             {
                 cost += Trips.Sum(trip => trip.Distance * trip.Carrier.FTLRate + 
-                    (decimal)trip.Carrier.ReeferCharge * trip.Distance * trip.Carrier.FTLRate / 100);
+                    trip.Carrier.ReeferCharge * trip.Distance * trip.Carrier.FTLRate / 100);
             }
             else if (JobType == JobType.LessThanTruckload)
             {
                 cost += Trips.Sum(trip => trip.Distance * trip.Carrier.LTLRate +
-                    (decimal)trip.Carrier.ReeferCharge * trip.Distance * trip.Carrier.LTLRate / 100) * Quantity;
+                    trip.Carrier.ReeferCharge * trip.Distance * trip.Carrier.LTLRate / 100) * Quantity;
             }
 
             if (VanType == VanType.Reefer)
