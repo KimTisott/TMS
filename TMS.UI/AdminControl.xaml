@@ -96,7 +96,7 @@
         </Grid>
         <TextBox Grid.Column="1"
                  Grid.Row="1"
-                 Height="Auto"
+                 Height="320"
                  IsReadOnly="True"
                  Margin="10"
                  Text="{Binding ElementName=LogDataGrid, Path=SelectedItem.Contents}"
