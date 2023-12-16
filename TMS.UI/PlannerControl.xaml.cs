@@ -89,6 +89,7 @@ public partial class PlannerControl
     {
         using TMSContext tms = new();
         var invoices = tms.Invoices.ToList();
+        Directory.CreateDirectory("Invoices");
         File.WriteAllText(Path.Combine("Invoices", $"InvoiceAllTime_{DateTime.Now.Clean()}.txt"), string.Join(Environment.NewLine, invoices.Select(x => x.Contents)));
     }
 
@@ -96,6 +97,7 @@ public partial class PlannerControl
     {
         using TMSContext tms = new();
         var invoices = tms.Invoices.Where(x => x.CreatedAt > DateTime.Now.AddDays(-14)).ToList();
+        Directory.CreateDirectory("Invoices");
         File.WriteAllText(Path.Combine("Invoices", $"InvoiceLast2Weeks_{DateTime.Now.Clean()}.txt"), string.Join(Environment.NewLine, invoices.Select(x => x.Contents)));
     }
 
